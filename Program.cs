@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Duplicate_Encoder
 {
@@ -7,25 +7,11 @@ namespace Duplicate_Encoder
     {
         static void Main()
         {
-            Console.WriteLine(DuplicateEncode("()("));            
+            Console.WriteLine(DuplicateEncode("aabcc))(("));            
         }
         public static string DuplicateEncode(string word)
         {
-            word = word.ToLower();
-
-            Dictionary<char, char> CompareList = new Dictionary<char, char>();
-
-            foreach (char c in word) {
-                if (!CompareList.ContainsKey(c)) CompareList.Add(c, '(');
-                else CompareList[c] = ')';
-            }
-
-            string modyfiedWord = "";
-            for (int i = 0; i < word.Length; i++) {
-                if(CompareList.ContainsKey(word[i])) modyfiedWord += CompareList[word[i]];
-            }
-
-            return modyfiedWord;
+            return new string(word.ToLower().Select(c => word.ToLower().Count(x => x.ToString() == c.ToString()) > 1 ? ')' : '(').ToArray());
         }
     }
 }
